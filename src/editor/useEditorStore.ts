@@ -245,8 +245,10 @@ function addCustomPaletteColor(color: string) {
 
 function exportCurrentFrame() {
   const p = activeProject.value
-  const frame = activeFrame.value
-  if (!p || !frame) return
+  if (!p) return
+  // 导出以用户选中的帧为准，而不是播放预览时正在显示的帧。
+  const frame = p.frames[p.activeFrameIndex] ?? p.frames[0]
+  if (!frame) return
   exportFramePng(frame, p.canvasSize, `${p.name}_当前帧.png`)
 }
 
